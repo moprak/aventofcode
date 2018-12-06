@@ -2,11 +2,11 @@ import numpy as np
 cs = np.loadtxt('input', dtype = int, delimiter = ',')
 ubound = cs.max(axis=0)
 lbound = cs.min(axis=0)
-canvas = -np.ones(ubound)
-canvas_2 = np.zeros(ubound)
+canvas = -np.ones(ubound+1)
+canvas_2 = np.zeros(ubound+1)
 scores = np.zeros(len(cs))
-for i in range(ubound[0]):
-    for j in range(ubound[1]):
+for i in range(ubound[0]+1):
+    for j in range(ubound[1]+1):
         dists = np.abs(cs[:,0] - i) + np.abs(cs[:,1] - j )
         canvas_2[i,j] = dists.sum()
         if (len(np.where(dists == dists.min())[0]) == 1 ):
