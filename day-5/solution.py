@@ -9,8 +9,7 @@ def react(data):
     while(len(post) != len(pre)):
         pre = post
         for l in ascii_lowercase:
-            post = post.replace(l+l.upper(), '')
-            post = post.replace(l.upper()+l, '')
+            post = post.replace(l+l.upper(), '').replace(l.upper()+l, '')
     return(len(post))
 
 print('Part A: ', react(data))
