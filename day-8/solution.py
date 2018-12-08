@@ -18,7 +18,7 @@ data = np.loadtxt('input', dtype = int)
 # traverse(0)
 # print('Part A: ', np.sum(metadata))
 
-def get_val(pos):
+def get_val(pos = 0):
     nc, nm = data[pos:pos+2]
     cvals = defaultdict(int)
     meta_sum = 0
@@ -34,6 +34,6 @@ def get_val(pos):
         value = sum(cvals[i-1] for i in metadata)
     return pos+nm, value, meta_sum
 
-_, value, meta_sum = get_val(0)
+_, value, meta_sum = get_val()
 print('Part A: ', meta_sum)
 print('Part B: ', value)
