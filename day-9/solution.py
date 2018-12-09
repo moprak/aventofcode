@@ -46,10 +46,9 @@ def play_game_blist(n_players, last_play):
         else:
             scores[player] += last
             pos = (pos - 7)%len(seq)
-            scores[player] += seq[pos]
-            seq = seq[:pos] + seq[pos+1:]
+            scores[player] += seq.pop(pos)
     print(max(scores.values()))
 
-play_game = play_game_deque
+play_game = play_game_blist
 play_game(n,l)
 play_game(n,l*100)
