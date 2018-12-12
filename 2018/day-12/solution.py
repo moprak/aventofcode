@@ -1,20 +1,10 @@
-import numpy as np
-import re
-from collections import Counter,defaultdict, deque
-import itertools
-from string import ascii_uppercase, ascii_lowercase
-from copy import deepcopy
-from blist import blist
 from aocd import get_data
-from functools import reduce
 
 raw = get_data()
-raw = raw.replace('.','0')
-raw = raw.replace('#','1')
 data = [ line.strip().split() for line in raw.splitlines() ]
 
 offset = 500
-init = '0'*offset+data[0][2]+'0'*offset
+init = '.'*offset+data[0][2]+'.'*offset
 
 data = data[2:]
 
@@ -30,22 +20,22 @@ def next_gen(before):
 
 def detect_convergence(vals):
     offset = vals[-1] - vals[-2]
-    for i in range(len(vals) - 1):
+    for i in range(len(vals) - 10, len(vals) - 1):
         if vals[i+1] - vals[i] != offset:
             return False
     return True
 
 gens = 1000
-gen_sums = np.zeros(gens,dtype=int)
+gen_sums = []
 after = init
 for gen in range(gens):
     after = next_gen(after)
-    if(after[-5:] != '00000' or after[:5] != '00000'):
+    if(after[-5:] != '.....' or after[:5] != '.....'):
         print('insufficient buffer! rerun with more padding')
         break
-    gen_sums[gen] = sum([i-offset if after[i] == '1' else 0 for i in range(len(init))])
-    if( gen > 10 and detect_convergence(gen_sums[gen-10:gen+1]) ):
-        print('converged under some definition')
+    gen_sums.append(sum([i-offset if after[i] == '#' else 0 for i in range(len(init))]))
+    if( gen > 10 and detect_convergence(gen_sums) ):
+        print('naive convergence attained ')
         break
 
 print('Part A: ', gen_sums[19])
