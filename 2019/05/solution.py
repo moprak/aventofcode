@@ -15,7 +15,9 @@ raw = puzzle.input_data
 data = [int(i) for i in raw.strip('\n').split(sep=',')]
 
 program = intcode.Intcode(data,[1])
-program.run()
+while (not program.halted):
+    program.produced_output = False
+    program.run()
 puzzle.answer_a = program.outputs.pop()
 
 program = intcode.Intcode(data,[5])
