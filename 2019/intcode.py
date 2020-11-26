@@ -5,6 +5,10 @@ class Intcode:
         self.inputs = inputs
         self.outputs = []
         self.input_count = 0
+        self.produced_output = False
+        self.halted = False
+    def add_input(self, d):
+        self.inputs = [d] + self.inputs
     def get(self, idx):
         return self.program[idx]
     def set(self, idx, value):
@@ -13,19 +17,21 @@ class Intcode:
             params = [ self.ptr+i+1 if (self.program[self.ptr]//int(10**(2+i)))%10 else self.program[self.ptr+i+1] for i in range(nargs)]
             return params
     def run(self):
-        while self.program[self.ptr] != 99:
+        while not self.halted and not self.produced_output:
             opcode = self.program[self.ptr]%100
-            if opcode == 1:
+            if opcode == 99:
+                self.halted = True
+            elif opcode == 1:
                 params = self.get_params(self.ptr, 3)
                 self.program[params[2]] = self.program[params[0]] + self.program[params[1]]
                 self.ptr += 4
             elif opcode == 2:
                 params = self.get_params(self.ptr, 3)
-                self.program[params[2]] = self.program[params[0]] * self.program[params[1]]; self.ptr += 4
+                self.program[params[2]] = self.program[params[0]] * self.program[params[1]]
+                self.ptr += 4
             elif opcode == 3:
                 params = self.get_params(self.ptr, 1)
                 self.input_count += 1
-                print(self.inputs)
                 if self.inputs:
                     self.program[params[0]] = self.inputs.pop()
                 else:
@@ -34,6 +40,7 @@ class Intcode:
             elif opcode == 4:
                 params = self.get_params(self.ptr, 1)
                 self.outputs.append(self.program[params[0]])
+                self.produced_output = True
                 self.ptr +=2
             elif opcode == 5:
                 params = self.get_params(self.ptr, 2)
@@ -49,7 +56,9 @@ class Intcode:
                     self.ptr +=3
             elif opcode == 7:
                 params = self.get_params(self.ptr, 3)
-                self.program[params[2]] = int(self.program[params[0]] < self.program[params[1]]); self.ptr += 4
+                self.program[params[2]] = int(self.program[params[0]] < self.program[params[1]])
+                self.ptr += 4
             elif opcode == 8:
                 params = self.get_params(self.ptr, 3)
-                self.program[params[2]] = int(self.program[params[0]] == self.program[params[1]]); self.ptr += 4
+                self.program[params[2]] = int(self.program[params[0]] == self.program[params[1]])
+                self.ptr += 4
