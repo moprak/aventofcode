@@ -10,6 +10,7 @@ class Intcode:
         self.halted = False
         self.memory = {}
         self.relative_base = 0
+        self.input_func = None
     def add_input(self, d):
         self.inputs = [d] + self.inputs
     def get(self, idx):
@@ -50,6 +51,8 @@ class Intcode:
                 self.input_count += 1
                 if self.inputs:
                     self.set(params[0] , self.inputs.pop())
+                elif self.input_func:
+                    self.set(params[0] , self.input_func())
                 else:
                     self.set(params[0] , int(input('enter input: ')))
                 self.ptr +=2
