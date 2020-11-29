@@ -8,6 +8,7 @@ from blist import blist
 from aocd import get_data
 from functools import reduce
 from aocd.models import Puzzle
+import math
 
 puzzle = Puzzle(year=2019, day=)
 raw = puzzle.input_data
