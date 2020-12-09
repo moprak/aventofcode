@@ -28,11 +28,14 @@ to_check = data[i]
 
 integrals = np.zeros(len(data)+1)
 integrals[1:] = np.cumsum(data)
+hi = 0
 for i in range(len(integrals)):
-    for j in range(i+2,len(integrals)):
+    for j in range(max(hi,i+2),len(integrals)):
         interval_sum = integrals[j] - integrals[i]
         if interval_sum == to_check:
             print(min(data[i:j]) + max(data[i:j]))
             break
         elif interval_sum > to_check:
+            hi = j
             break
+    if( hi != j): break
