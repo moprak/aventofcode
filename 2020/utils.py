@@ -27,3 +27,12 @@ def binary_search(a, x, lo=0, hi=None):
     pos = bisect_left(a, x, lo, hi)
     return pos if pos != hi and a[pos] == x else -1
 
+# Pairs should be list of (ai,ni); outputs x such that x is congruent to ai mod ni for all i
+def chinese_remainder(pairs):
+    res = 0
+    _, N = zip(*pairs)
+    P = reduce(lambda x,y: x*y, N)
+    for a,n in pairs:
+        p = P//n
+        res+=a*pow(p,-1,n)*p #could also use Fermat's little theorem pow(p,n-2,n)
+    return res%P
