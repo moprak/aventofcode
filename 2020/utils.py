@@ -1,4 +1,10 @@
 import re
+import operator
+from functools import reduce
+
+def prod(l):
+  return reduce(operator.mul, l)
+
 def lmap(func, *iterables):
     return list(map(func, *iterables))
 
