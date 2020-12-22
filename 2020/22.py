@@ -22,7 +22,6 @@ def play_game_1(p1,p2):
             p1.extend([a,b])
         else:
             p2.extend([b,a])
-
     if(len(p1)):
         return score(p1)
     return score(p2)
@@ -36,24 +35,19 @@ def play_game(p1,p2):
         if key in seen_states:
             return 1, p1
         seen_states.add(key)
-
         a = p1.popleft()
         b = p2.popleft()
         if( len(p1) < a or len(p2) < b ):
             if( a > b ):
-                winner = p1
-                winner.extend([a,b])
+                p1.extend([a,b])
             else:
-                winner = p2
-                winner.extend([b,a])
+                p2.extend([b,a])
         else:
             retval, _ = play_game(deque(list(p1)[:a]),deque(list(p2)[:b]))
             if retval:
-                winner = p1
-                winner.extend([a,b])
+                p1.extend([a,b])
             else:
-                winner = p2
-                winner.extend([b,a])
+                p2.extend([b,a])
     if(len(p1)):
         return 1, p1
     return 0, p2
