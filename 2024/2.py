@@ -19,8 +19,6 @@ def is_safe(row):
 
 
 def is_safe_damp(row):
-    if is_safe(row):
-        return True
     for i in range(len(row)):
         if is_safe(row[:i] + row[i + 1 :]):
             return True
