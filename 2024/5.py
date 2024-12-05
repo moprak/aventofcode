@@ -1,7 +1,6 @@
+from functools import cmp_to_key
 from aocd.models import Puzzle
 import utils
-from functools import cmp_to_key
-
 
 puzzle = Puzzle(year=2024, day=5)
 raw = puzzle.input_data
