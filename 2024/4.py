@@ -16,12 +16,12 @@ for j in range(ny):
         lines = []
         if i < nx - 3:
             lines.append("".join(data[j, i + k] for k in range(4)))
+        if j < ny - 3:
+            lines.append("".join(data[j + k, i] for k in range(4)))
         if i < nx - 3 and j < ny - 3:
             lines.append("".join(data[i + k, j + k] for k in range(4)))
         if i < nx - 3 and j > 2:
             lines.append("".join(data[i + k, j - k] for k in range(4)))
-        if j < ny - 3:
-            lines.append("".join(data[j + k, i] for k in range(4)))
         p1 += lines.count("XMAS") + lines.count("SAMX")
 print(p1)
 

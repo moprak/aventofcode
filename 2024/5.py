@@ -4,20 +4,15 @@ import utils
 
 puzzle = Puzzle(year=2024, day=5)
 raw = puzzle.input_data
-rules = raw.split("\n\n")[0]
-data = raw.split("\n\n")[1]
+rules, data = raw.split("\n\n")
 rules = [utils.ints(i) for i in rules.splitlines()]
 data = [utils.ints(i) for i in data.splitlines()]
 
 
+# Trick from 4HbQ
+# We -1 only if a < b is in rules
 def order(a, b):
-    for l, r in rules:
-        if a == r and b == l:
-            return 1
-        elif a == l and b == r:
-            return -1
-    return 0
-
+    return 1 - 2 * ([a,b] in rules)
 
 p1 = 0
 p2 = 0
