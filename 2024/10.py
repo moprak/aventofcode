@@ -1,4 +1,3 @@
-from collections import deque
 from aocd.models import Puzzle
 import numpy as np
 
@@ -10,8 +9,7 @@ data = np.array(
 
 
 def score(tx, ty, data):
-    to_check = deque()
-    to_check.append([tx, ty])
+    to_check = [[tx,ty]]
     peaks = set()
     paths = 0
     while len(to_check):
