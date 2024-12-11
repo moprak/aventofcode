@@ -1,17 +1,13 @@
-from collections import defaultdict
+from collections import Counter
 from aocd.models import Puzzle
 
 
 puzzle = Puzzle(year=2024, day=11)
 raw = puzzle.input_data
-data = defaultdict(int)
-for i in raw.split():
-    data[int(i)] += 1
-
-
+data = Counter(map(int,raw.split()))
 def blink(data, count):
     for _ in range(count):
-        newdata = defaultdict(int)
+        newdata = Counter()
         for s in data:
             l = len(f"{s}")
             if s == 0:
@@ -23,7 +19,6 @@ def blink(data, count):
                 newdata[s * 2024] += data[s]
         data = newdata
     print(sum(data[s] for s in data))
-
 
 blink(data, 25)
 blink(data, 75)
