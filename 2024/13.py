@@ -14,12 +14,14 @@ def score(data, offset=0):
         return 3 * x + y
     return 0
 
-def score_numpy(data, offset = 0):
-    tol = 1e-16 * offset + 1e-8 # 1e-8 for when offset is small
-    presses = np.linalg.solve(data[:2].T, data[2]+offset)
+
+def score_numpy(data, offset=0):
+    tol = 1e-16 * offset + 1e-8  # 1e-8 for when offset is small
+    presses = np.linalg.solve(data[:2].T, data[2] + offset)
     if np.all(np.abs(np.round(presses) - presses) < tol):
-        return round(presses.dot([3,1]))
+        return round(presses.dot([3, 1]))
     return 0
+
 
 puzzle = Puzzle(year=2024, day=13)
 raw = puzzle.input_data
